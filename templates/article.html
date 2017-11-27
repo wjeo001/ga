@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <h1>{{article.title}}</h1>
+    {% if session.rights=="admin" %}
+    <a class="btn btn-success mt-1 mb-1" href="/edit_article/{{article.id}}">&#x270D;</a>
+    {% endif %}
+    <small>Written by {{article.author}} on {{article.create_date.strftime('%d/%m/%Y')}}</small>
+    <hr>
+    <div>
+        {{article.body | safe}}
+    </div>
+
+
+{% endblock %}

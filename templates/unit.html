@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="row">
+  <div class="col-sm-8"><h1>{{ unit.unit_name }}</h1></div>
+  <div class="col-sm-4"><h3>{{ unit.subject }}</h3></div>
+</div>
+
+<div class="col-1 col-md-2">
+  {% if session.rights=="admin" %}
+  <a class="btn btn-success mt-1 mb-1" href="/edit_unit/{{unit.id}}">&#x270D;</a>
+  {% endif %}
+</div>
+
+<br>
+<div class="row">
+  <div class="col-sm-3">
+    <h4>Description</h4>
+  </div>
+  <div class="col-sm-9">
+    <h6>{{unit.unit_desc | safe}}</h6>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-sm-3">
+    <h4>Start Date</h4>
+  </div>
+  <div class="col-sm-9">
+    <h6>{{unit.start_date}}</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <h4>End Date</h4>
+  </div>
+  <div class="col-sm-9">
+    <h6>{{unit.end_date}}</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <h4>Activity Year</h4>
+  </div>
+  <div class="col-sm-9">
+    <h6>{{unit.year}}</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <h4>Semester</h4>
+  </div>
+  <div class="col-sm-9">
+    <h6>{{unit.semester}}</h6>
+  </div>
+</div>
+<hr>
+<div class = "row">
+  <div class="col-sm-3"><h4>Tests</h4></div>
+  <div class="col-sm-9">
+    <ol>
+      {% for q in quizlist %}
+        <!-- <li><a href="/quiz_template_original/{{q.qs_id}}?puid={{pu_id}}"><h6>{{q.qs_name}}</h6></a></li> -->
+        <li><a href="/quiz_solve/{{q.qs_id}}?puid={{pu_id}}"><h6>{{q.qs_name}}</h6></a></li>
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-sm-3">
+    <h4>Linked Courses</h4>
+  </div>
+  <div class="col-sm-9">
+    <ul>
+      {% for course in courselist %}
+        <li><a href="/course/{{course.id}}"><h6>{{course.course_name}}</h6></a></li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</div>
+
+
+{% if session.rights=="admin" %}
+<hr>
+<div>unit status - {{unit.status}}</div>
+<div>Created by - {{unit.created_by}}</div>
+<div>Created on {{unit.created_date}}</div>
+{% endif %}
+
+
+{% endblock %}

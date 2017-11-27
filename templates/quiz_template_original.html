@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+{% set fn=quiz.quizfile %}
+{% set s_url=url_for('static',filename='quick-quiz-master/quiz_lib/'+quiz.quizfile) %}
+
+<script>
+
+  $(function() {
+    $('#quiz').quiz('{{s_url}}');
+  });
+</script>
+
+<div class="container-fluid">
+  <div id="quiz"></div>
+</div>
+
+
+
+
+{% endblock %}

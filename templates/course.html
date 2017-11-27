@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1>{{ course.course_name }}</h1>
+{% if session.rights=="admin" %}
+<a class="btn btn-success mt-1 mb-1" href="/edit_course/{{course.id}}">&#x270D;</a>
+{% endif %}
+<!-- <a class="btn btn-success mt-1 mb-1" href="/enrol_course/{{course.id}}">Enrol</a> -->
+{% if enrolled==False %}
+<form action="{{url_for('enrol_course', id=course.id)}}" method="POST">
+    <input type="hidden" name="_method" value="Enrol">
+    <input type="submit" value="Enrol" class="btn btn-danger">
+</form>
+{% endif %}
+
+{% if enrolled==True%}
+<form action="{{url_for('withdraw_course', id=course.id)}}" method="POST">
+    <input type="hidden" name="_method" value="Withdraw">
+    <input type="submit" value="Withdraw" class="btn btn-danger">
+</form>
+{% endif %}
+
+<div class="row">
+  <div class="col-12">
+    <div><h4>Description</h4> </div>
+    <div><h6>{{course.course_desc | safe}}</h6></div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-2">
+    <h4>Start Date</h4>
+  </div>
+  <div class="col-10">
+    <h6>{{course.start_date.strftime('%d-%m-%Y')}}</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-2">
+    <h4>End Date</h4>
+  </div>
+  <div class="col-10">
+    <h6>{{course.end_date.strftime('%d-%m-%Y')}}</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-2">
+    <h4>Activity Year</h4>
+  </div>
+  <div class="col-10">
+    <h6>{{course.year}}</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-2">
+    <h4>Semester</h4>
+  </div>
+  <div class="col-10">
+    <h6>{{course.semester}}</h6>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-2">
+    <h4>Linked Units</h4>
+  </div>
+  <div class="col-10">
+    <ul>
+      {% for unit in unitlist %}
+
+        <li><a href="/unit/{{unit.id}}?cid={{cid}}"><h6>{{unit.unit_name}}</h6></a></li>
+
+
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+
+{% if session.rights=="admin" %}
+<hr>
+<div>Course status - {{course.status}}</div>
+<div>Created by - {{course.created_by}}</div>
+<div>Created on {{course.created_date}}</div>
+{% endif %}
+
+
+{% endblock %}

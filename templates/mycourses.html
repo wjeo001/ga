@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h2>Enrolled Courses</h2>
+    <table class="table table-striped">
+        <tr>
+          <th>ID</th>
+          <th>COURSE NAME</th>
+          <th>DESCRIPTION</th>
+          <th>START DATE</th>
+          <th>END DATE</th>
+        </tr>
+        {% for course in courses %}
+          <tr>
+            <td>{{course.id}}</td>
+            <td>{{course.course_name}}</td>
+            <td>{{course.course_desc}}</td>
+            <td>{{course.start_date}}</td>
+            <td>{{course.end_date}}</td>
+          </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

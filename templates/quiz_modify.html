@@ -1,0 +1,124 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+{% from "includes/_formhelpers.html" import render_field %}
+<form method="POST" action="">
+  <div class="row" style="margin-top:5px;">
+      <div class="col-md-2" style="border-right: 1px solid green; ">
+          <h5>Questions</h5>
+
+          {% for q in qlist %}
+              <h6>
+                  {{q.qq_number}}
+                  <a href="/quiz_modify/{{q.qs_id}}?edit={{q.qq_number}}" style="text-decoration: none; color: black;"><i class="fa fa-pencil" aria-hidden="true" name="qedit" value={{q.qq_number}}></i></a>
+                  <!-- <a href="/delete_modify_quiz/{{q.qq_number}}" style="text-decoration: none; color: black;"><i class="fa fa-trash" aria-hidden="true" name="qdel" value={{q.qq_number}}></i></a> -->
+              </h6>
+          {% endfor %}
+
+      </div>
+      <div class="col-md-10" >
+        {% if combo=="" %}
+          <h5>Create a new quiz for <b>{{session['title']}}</b></h5>
+        {% else %}
+          <h5>Edit {{qid}} quiz</h5>
+        {% endif %}
+
+        <div class="form-group">
+            {{render_field(form.subject, class_="form-control")}}
+
+            {{render_field(form.categories, class_="form-control")}}
+
+            {{render_field(form.description, class_="form-control")}}
+
+            {{ render_field(form.Question, class_="form-control", id="editor_big")}}
+            <hr>
+            <select id="comboselect" class="form-control">
+                {% if combo=="" %}
+                  <option>Choose the question type</option>
+                  <option value="multi">Multichoices</option>
+                  <option value="short">Short Answer</option>
+
+                {% else %}
+                  <option {{' selected=\"selected\"' if combo=='multi' else ""}} value="multi">Multichoices</option>
+                  <option {{' selected=\"selected\"' if combo=='short' else ""}} value="short">Short Answer</option>
+                {% endif %}
+
+            </select>
+        </div>
+
+        <div class="multi box">
+          <div class="form-group">
+              {{ render_field(form.op1, class_="form-control", id="editor_op1")}}
+              <div class="form-check">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="chk_op" value=0 {{'checked="checked"' if correct_answer=='a' else ""}}>
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">This is the correct answer</span>
+                  </label>
+              </div>
+          </div>
+          <div class="form-group">
+              {{ render_field(form.op2, class_="form-control", id="editor_op2")}}
+              <div class="form-check">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="chk_op" value=1 {{'checked="checked"' if correct_answer=='b' else ""}}>
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">This is the correct answer</span>
+                  </label>
+              </div>
+          </div>
+          <div class="form-group">
+              {{ render_field(form.op3, class_="form-control", id="editor_op3")}}
+              <div class="form-check">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="chk_op" value=2 {{'checked="checked"' if correct_answer=='c' else ""}}>
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">This is the correct answer</span>
+                  </label>
+              </div>
+          </div>
+          <div class="form-group">
+              {{ render_field(form.op4, class_="form-control", id="editor_op4")}}
+              <div class="form-check">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="chk_op" value=3 {{'checked="checked"' if correct_answer=='d' else ""}}>
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">This is the correct answer</span>
+                  </label>
+              </div>
+          </div>
+        </div>
+        <div class="short box">
+            {{ render_field(form.op_short, class_="form-control") }}
+        </div>
+        </br>
+        {% if combo=="" %}
+          <p><input class="btn btn-primary" name="btnrq" type="submit" value="Add a quiz"></p>
+          <p><input class="btn btn-primary" name="btnrq" type="submit" value="Finish creating quizes"></p>
+        {% else %}
+          <input type="hidden" name="post_qid" value="{{qid}}">
+          <p><input class="btn btn-primary" type="submit" name="btnrq" value="Update"></p>
+        {% endif %}
+
+      </div>
+  </div>
+</form>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#comboselect").change(function(){
+            $(this).find("option:selected").each(function(){
+                var optionValue = $(this).attr("value");
+                if(optionValue){
+                    $(".box").not("." + optionValue).hide();
+                    $("." + optionValue).show();
+                } else{
+                    $(".box").hide();
+                }
+            });
+        }).change();
+    });
+</script>
+
+{% endblock %}

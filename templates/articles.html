@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-11">
+      <h2>Announcements</h2>
+    </div>
+    <div class="col-1">
+        {% if session.rights=="admin" %}
+        <a class="btn btn-success mt-1 mb-1" href="/add_article">&#9998;</a>
+        {% endif %}
+    </div>
+  </div>
+</div>
+
+
+<div class="list-group">
+  {% for article in articles %}
+    <a href="article/{{article.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{article.title}}</h5>
+        <small>{{article.author}}</small>
+      </div>
+      <small>Posted on {{article.create_date}}</small>
+    </a>
+  {% endfor %}
+</div>
+
+
+
+
+<!--
+<ul class="list-group">
+    {% for article in articles %}
+
+    <li class="list-group-item list-group-item-action">
+
+        <a href="article/{{article.id}}"><h5>{{article.title}}</h5></a>
+
+
+    </li>
+    {% endfor %}
+</ul> -->
+
+
+{%  endblock %}

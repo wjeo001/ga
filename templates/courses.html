@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1>My Courses</h1>
+<!-- <ul class="list-group">
+    {% for course in courses %}
+    <li class="list-group-item"><a href="course/{{course.id}}">{{course.course_name}}</a></li>
+    {% endfor %}
+</ul> -->
+
+<div class="list-group">
+  {%for course in courses%}
+    <a href="course/{{course.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{course.course_name}}</h5>
+        <small>{{course.course_desc | safe}}</small>
+      </div>
+    </a>
+  {%endfor%}
+</div>
+
+<hr>
+<!-- <h1>Available Courses</h1>
+<ul class="list-group">
+    {% for opencourse in opencourses %}
+    <li class="list-group-item"><a href="course/{{opencourse.id}}">{{opencourse.course_name}}</a></li>
+    {% endfor %}
+</ul> -->
+<h1>Available Courses</h1>
+<div class="list-group">
+  {%for opencourse in opencourses%}
+    <a href="course/{{opencourse.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{opencourse.course_name}}</h5>
+        <small>{{opencourse.course_desc | safe}}</small>
+      </div>
+    </a>
+  {%endfor%}
+</div>
+
+
+
+
+
+{%  endblock %}

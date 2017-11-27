@@ -1,0 +1,137 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>Dashboard <small> Welcome {{session.username}}</small></h1>
+    <a class="btn btn-success" href="/add_article">Add Article</a>
+    <h2>Enrolled Courses</h2>
+    <div class="container">
+      <div class="row">
+        <div class="col-1"><h4>ID</h4></div>
+        <div class="col-2"><h4>COURSE NAME</h4></div>
+        <div class="col-5"><h4>DESCRIPTION</h4></div>
+        <div class="col-2"><h4>START DATE</h4></div>
+        <div class="col-2"><h4>END DATE</h4></div>
+      </div>
+      <hr>
+
+        {% for course in courses %}
+        <div class="row border">
+            <div class="col-1">{{course.id}}</div>
+            <div class="col-2">{{course.course_name}}</div>
+            <div class="col-5">{{course.course_desc}}</div>
+            <div class="col-2">{{course.start_date}}</div>
+            <div class="col-2">{{course.end_date}}</div>
+
+              <div class="row">
+                <div class="col-1"><h6>ID</h6></div>
+                <div class="col-2"><h6>SUBJECT</h6></div>
+                <div class="col-2"><h6>UNIT NAME</h6></div>
+                <div class="col-2"><h6>DESC</h6></div>
+                <div class="col-2"><h6>START DATE</h6></div>
+                <div class="col-2"><h6>END DATE</h6></div>
+                <div class="col-1"><h6>SEMESTER</h6></div>
+              </div>
+
+
+                {%for unit in units %}
+                  {% if unit.course_id==course.course_id %}
+                  <div class="row">
+                    <div class="col-1">{{unit.unit_id}}</div>
+                    <div class="col-2">{{unit.subject}}</div>
+                    <div class="col-2">{{unit.unit_name}}</div>
+                    <div class="col-2">{{unit.unit_desc}}</div>
+                    <div class="col-2">{{unit.start_Date}}</div>
+                    <div class="col-2">{{unit.end_Date}}</div>
+                    <div class="col-1">{{unit.semester}}</div>
+                  </div>
+                  {% endif %}
+                {% endfor %}
+
+        </div>
+        {% endfor %}
+
+
+      <!-- <div class="row">
+        {%for unit in units %}
+        <div class="col-1">{{unit.unit_id}}</div>
+        <div class="col-2">{{unit.subject}}</div>
+        <div class="col-2">{{unit.unit_name}}</div>
+        <div class="col-2">{{unit.unit_desc}}</div>
+        <div class="col-2">{{unit.start_Date}}</div>
+        <div class="col-2">{{unit.end_Date}}</div>
+        <div class="col-1">{{unit.semester}}</div>
+        {% endfor %}
+      </div> -->
+    </div>
+    <hr>
+    <h2>Enrolled Courses</h2>
+    <table class="table table-striped table-responsive table-hover">
+        <tr>
+          <th>ID</th>
+          <th>COURSE NAME</th>
+          <th>DESCRIPTION</th>
+          <th>START DATE</th>
+          <th>END DATE</th>
+          <th></th>
+        </tr>
+        {% for course in courses %}
+          <tr>
+            <td>{{course.id}}</td>
+            <td>{{course.course_name}}</td>
+            <td>{{course.course_desc}}</td>
+            <td>{{course.start_date}}</td>
+            <td>{{course.end_date}}</td>
+            <td><a href="#" class="btn btn-secondary float-right">View</a></td>
+          </tr>
+        {% endfor %}
+    </table>
+    <!-- <hr>
+    <div class="row-fluid" >
+        <div class="accordion-toggle" data-toggle="collapse" data-target="#collapseThree">
+            <div class="span1">1</div>
+            <div class="span3">Mark</div>
+            <div class="span3">Otto</div>
+            <div class="span3">@mdo</div>
+        </div>
+        <div class="span1">
+            <button type="button" class="btn btn-primary"><i class="icon-search icon-white"></i></button>
+        </div>
+    </div>
+    <div id="collapseThree" class="row-fluid collapse in">
+        <div class="span1"></div>
+        <div class="span9">
+            Details 1 <br/>
+            Details 2 <br/>
+            Details 3 <br/>
+        </div>
+    </div> -->
+
+    <hr>
+    <h2>Recent articles</h2>
+    <table class="table table-striped table-responsive table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th></th>
+            <th></th>
+
+        </tr>
+        {% for article in articles %}
+            <tr>
+                <td>{{article.id}}</td>
+                <td>{{article.title}}</td>
+                <td>{{article.author}}</td>
+                <td>{{article.create_date}}</td>
+                <td><a href="edit_article/{{article.id}}" class="btn btn-secondary float-right">Edit</a></td>
+                <td>
+                    <form action="{{url_for('delete_article', id=article.id)}}" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                    </form>
+                </td>
+            </tr>
+        {% endfor  %}
+    </table>
+{% endblock %}

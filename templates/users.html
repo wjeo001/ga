@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block body %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/searchbox.css')}}">
+
+<div class="form-group float-md-right float-xs-right">
+    <input type="text" class="search form-control" placeholder="Enter search keywords">
+</div>
+<span class="counter float-md-right float-xs-right"></span>
+<table class="table table-hover table-bordered results">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th class="col-md-3 col-xs-3">Name</th>
+      <th class="col-md-3 col-xs-3">Email</th>
+      <th class="col-md-3 col-xs-3">Phone</th>
+      <th class="col-md-3 col-xs-3">Mobile</th>
+      <th class="col-md-1 col-xs-1"><i class="fa fa-key" aria-hidden="true"></i></th>
+    </tr>
+    <tr class="warning no-result">
+      <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for u in users %}
+      {% set n=u.firstname+' '+u.lastname %}
+
+        <tr>
+          <th scope="row">
+            <a href="profile_edit/{{u.username}}">{{u.username}}</a>
+          </th>
+          <td>
+            {{n}}
+          </td>
+          <td>{{u.email}}</td>
+          <td>{{u.phone}}</td>
+          <td>{{u.mob}}</td>
+          <td><a href="/resetpw/{{u.username}}"><i class="fa fa-key"></i></a></td>
+        </tr>
+
+    {% endfor %}
+
+  </tbody>
+</table>
+
+<script src="{{url_for('static',filename='js/searchbox.js')}}"></script>
+{%endblock%}

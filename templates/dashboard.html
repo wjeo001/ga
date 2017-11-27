@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>{{session.fullname}}'s Dashboard </h1>
+    <hr>
+    <h2>Enrolled Courses</h2>
+    <table class="table table-striped table-responsive table-hover">
+        <tr>
+          <th>ID</th>
+          <th>COURSE NAME</th>
+          <th>DESCRIPTION</th>
+          <th>START DATE</th>
+          <th>END DATE</th>
+
+        </tr>
+        {% for course in courses %}
+          <tr class='clickable-row' data-href="course/{{course.id}}" style="cursor: pointer">
+            <td>{{course.id}}</td>
+            <td>{{course.course_name}}</td>
+            <td>{{course.course_desc | safe}}</td>
+            <td>{{course.start_date.strftime('%d/%m/%Y')}}</td>
+            <td>{{course.end_date.strftime('%d/%m/%Y')}}</td>
+
+          </tr>
+        {% endfor %}
+    </table>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <canvas id="myChart" width="400" height="150"></canvas>
+
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <canvas id="myChart2" width="400" height="150"></canvas>
+
+      </div>
+    </div>
+    <hr>
+    <table class="table table-striped table-responsive table-hover">
+        <tr>
+          <th>Unit Name</th>
+          <th>Test Title</th>
+          <th> # of Attempts</th></th>
+        </tr>
+        {% for p in progress %}
+          <tr>
+            <td>{{p.unit_name}}</td>
+            <td>{{p.qs_name}}</td>
+            <td>{{p.attempts}}</td>
+          </tr>
+        {% endfor %}
+    </table>
+
+
+    <script src="{{url_for('static',filename='js/chart1.js')}}"></script>
+    <script src="{{url_for('static',filename='js/chart2.js')}}"></script>
+
+<script>
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});
+</script>
+
+{% endblock %}

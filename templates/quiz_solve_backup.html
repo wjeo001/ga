@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<link href="https://fonts.googleapis.com/css?family=Cinzel|Hind" rel="stylesheet">
+<form method="POST" action="">
+  <div class="container-fluid">
+    <h1 style="font-family: 'Cinzel', serif;">{{qset.qs_name}}</h1>
+    <div class="row">
+      <!-- Left panel -->
+      <div class="col-1">
+        <div class="row">
+          <ul>
+            {% for i in range(0,qset.number_of_questions) %}
+              <li style="font-family: 'Hind', sans-seif;">{{i}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="col">
+        {% if finished==False %}
+          <div class="quiz-question">
+            <div class="col"><h2>Question No.{{question.qq_number}}</h2></div>
+            <div class="col"><h6>{{question.qq_body|safe}}</h6></div>
+          </div>
+
+          <div class="quiz-answers">
+            {% for a in choices %}
+              <div class="row">
+                <input class="quiz-button btn" name="btnrq" type="submit" value="{{a.qa_answer_number}}">
+                <div class="col">{{a.qa_answer|safe}}</div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="quiz-question">
+            <div class="col"><h2>Your Score is</h2></div>
+            <div class="col"><h6>{{session.correct}} out of {{session.totalq}}</h6></div>
+            <div class="col"><h6>Your answers : {{session.answers}}</h6></div>
+          </div>
+
+          <div class="quiz-answers">
+            <div class="row">
+              <input class="quiz-button btn" name="btnrq" type="submit" value="End it">
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

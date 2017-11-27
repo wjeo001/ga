@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1>Quiz Manager</h1>
+<link rel="stylesheet" href="{{url_for('static',filename='css/searchbox.css')}}">
+
+<div class="form-group float-md-right float-xs-right">
+    <input type="text" class="search form-control" placeholder="Enter search keywords">
+</div>
+<span class="counter float-md-right float-xs-right"></span>
+<table class="table table-hover table-bordered results">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th class="col-md-2 col-xs-2">Unit Name</th>
+      <th class="col-md-3 col-xs-3">___Quizname____</th>
+      <th class="col-md-3 col-xs-3">QuizFile</th>
+      <th class="col-md-1 col-xs-1"><i class="fa fa-file-text-o" aria-hidden="true"></i></th>
+    </tr>
+    <tr class="warning no-result">
+      <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for q in qlist %}
+      <tr>
+        <th scope="row">
+          <a href="#">{{q.qs_id}}</a>
+        </th>
+        <td>
+          {{q.unit_name}}
+        </td>
+        <td>
+          <a href="/quiz_modify/{{q.qs_id}}?edit=1">{{q.qs_name}}</a>
+        </td>
+        <td>{{q.quizfile}}</td>
+        <td>
+            <form method=post action="">
+              {% if q.qs_name == None  %}
+                <input type="text" class="form-control" name="qtitle" placeholder="Type new title">
+                <input type="hidden" id="title" value="">
+                <input type="hidden" name="post_id" value="{{q.id}}">
+                <input class="btn btn-outline-warning btn-sm" name="btnrq" type=submit value=Create>
+
+              {% else %}
+                <input type="text" class="form-control" name="qtitle" placeholder="Type new title">
+                <input type="hidden" id="title" value="">
+                <input type="hidden" name="post_id" value="{{q.id}}">
+                <input class="btn btn-outline-warning btn-sm" name="btnrq" type=submit value=Create>
+                <input type="hidden" name="post_qid" value="{{q.qs_id}}">
+                <input class="btn btn-outline-danger btn-sm" type=submit name="btnrq" value="Remove Quiz">
+              {% endif %}
+            </form>
+        </td>
+      </tr>
+
+    {% endfor %}
+
+  </tbody>
+</table>
+
+
+<script src="{{url_for('static',filename='js/searchbox.js')}}"></script>
+
+
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <div class="row">
+      <div class="col-8"><h1>My Profile</h1></div>
+      <div class="col-4">
+        <a class="btn btn-success mt-1 mb-1" href="/profile_edit/{{user.username}}">&#x270D;</a>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-2"><h6>First Name</h6></div>
+      <div class="col"><h6>{{user.firstname}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><h6>Last Name</h6></div>
+      <div class="col"><h6>{{user.lastname}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><h6>Email</h6></div>
+      <div class="col"><h6>{{user.email}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><h6>Date of Birth</h6></div>
+      <div class="col"><h6>{{user.date_of_birth}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><h6>Phone Number</h6></div>
+      <div class="col"><h6>{{user.phone}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><h6>Mobile Number</h6></div>
+      <div class="col"><h6>{{user.mob}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><h6>Street Address</h6></div>
+      <div class="col"><h6>{{user.street_address}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><h6>Suburb</h6></div>
+      <div class="col"><h6>{{user.suburb}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><h6>State</h6></div>
+      <div class="col"><h6>{{user.state}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><h6>Postcode</h6></div>
+      <div class="col"><h6>{{user.postcode}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col-2"><h6>Address Type</h6></div>
+      <div class="col"><h6>{{user.addr_type}}</h6></div>
+    </div>
+
+    {% if session.rights == "admin" or session.rights=="staff"%}
+    <hr>
+    <H4>Staff Only</h4>
+    <div class="row">
+      <div class="col"><h6>User ID : {{session.id}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col"><h6>Username : {{user.username}}</h6></div>
+    </div>
+    <div class="row">
+      <div class="col"><h6>User Type : {{user.people_type}}</h6></div>
+    </div>
+    {% endif %}
+
+
+{% endblock %}
